@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: churn_dev
+      POSTGRES_USER: churn_admin
+      POSTGRES_PASSWORD: churn_admin_dev
+    ports:
+      - "5433:5432"
+    volumes:
+      - churn_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U churn_admin -d churn_dev"]
+      interval: 2s
+      timeout: 5s
+      retries: 15
+
+  seed:
+    build: ./seed
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      ADMIN_DATABASE_URL: postgresql://churn_admin:churn_admin_dev@db:5432/churn_dev
+      SQL_DIR: /sql
+    volumes:
+      - ./sql:/sql:ro
+    restart: "no"
+
+volumes:
+  churn_pgdata:

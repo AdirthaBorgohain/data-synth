@@ -1,0 +1,12 @@
+# Copy to datasynth.yaml — secrets via .env / environment
+llm_provider: anthropic
+# anthropic_model: claude-opus-4-7
+# openai_model: gpt-5.1
+# llm_reasoning: true
+# sample_size: 10000
+# max_result_rows: 10000000
+# artifacts_dir: artifacts
+# eda_top_k: 10
+# eda_corr_threshold: 0.7
+# feat_max_iterations: 4
+# feat_metric_epsilon: 0.005
